@@ -2,12 +2,8 @@
 
 #include <gflags/gflags.h>
 #include <glog/logging.h>
-#include <yaml-cpp/yaml.h>
-#include <ceres/ceres.h>
 
-#include <OpenImageIO/imageio.h>
-OIIO_NAMESPACE_USING
-
+#include <openjpeg-2.4/openjpeg.h>
 
 int main(int argc, char* argv[])
 {
@@ -17,31 +13,33 @@ int main(int argc, char* argv[])
 
 	LOG(INFO) << "Test some library linking!\n";
 
+	// {
+	// 	float img[3] = {0.125, 0.25, 0.5};
+	// 	std::string filename = "/tmp/testoutimg.exr";
+
+	// 	auto out = ImageOutput::create(filename);
+	// 	if (!out)
+	// 		return 1;
+ //        ImageSpec spec(1, 1, 3, TypeDesc::HALF);
+ //        out->open(filename, spec);
+ //        out->write_image(TypeDesc::FLOAT, img);
+ //        out->close();
+	// }
 	{
-		YAML::Node node;
-		node["test"] = 1.0;
-		node["foo"] = "bar";
-		LOG(INFO) << "YAML test: " << node;
-	}
+		opj_stream_t* pJP2Stream = NULL;
+		opj_codec_t* pJP2Codec = NULL;
+		opj_image_t* pJP2Image = NULL;
+		opj_dparameters_t jp2dParams;
 
-	{
-		ceres::Problem problem;
-		ceres::Solver::Summary summary;
+		// opj_codestream_index_t *pJP2CodeStreamIndex = opj_get_cstr_index(pJP2Codec);
+		// opj_codestream_info_v2_t *pJP2CodeStreamInfo = opj_get_cstr_info(pJP2Codec);
 
-		std::cout << "Ceres summary: " << summary.FullReport();
-	}
-
-	{
-		float img[3] = {0.125, 0.25, 0.5};
-		std::string filename = "/tmp/testoutimg.exr";
-
-		auto out = ImageOutput::create(filename);
-		if (!out)
-			return 1;
-        ImageSpec spec(1, 1, 3, TypeDesc::HALF);
-        out->open(filename, spec);
-        out->write_image(TypeDesc::FLOAT, img);
-        out->close();
+		pJP2Stream = opj_stream_create_default_file_stream("/home/ingmar/Downloads/zoo1.jp2", OPJ_TRUE);
+		if (!pJP2Stream)
+		{
+		    // pFileInfo->ErrorCode = ERR_OPEN;
+		    return 1;
+		}
 	}
 
 	LOG(INFO) << "Done!";
