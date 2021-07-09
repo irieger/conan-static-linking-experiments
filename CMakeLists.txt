@@ -15,4 +15,4 @@ endif()
 
 add_executable(main-demo src/main.cpp)
 target_compile_features(main-demo PRIVATE cxx_std_17)
-target_link_libraries(main-demo PRIVATE "CONAN_PKG::gflags" "CONAN_PKG::glog" "CONAN_PKG::eigen" "CONAN_PKG::yaml-cpp" "CONAN_PKG::ceres-solver")
+target_link_libraries(main-demo PRIVATE "CONAN_PKG::gflags" "CONAN_PKG::glog" "CONAN_PKG::eigen" "CONAN_PKG::yaml-cpp" "CONAN_PKG::ceres-solver" "CONAN_PKG::openimageio")
