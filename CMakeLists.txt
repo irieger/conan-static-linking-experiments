@@ -13,6 +13,12 @@ else()
 endif()
 
 
+# Trying to get boost linked
+set(other_flags "${other_flags} -fvisibility-inlines-hidden")
+set(other_flags "${other_flags} -fvisibility=hidden")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${other_flags}")
+
+
 add_executable(main-demo src/main.cpp)
 target_compile_features(main-demo PRIVATE cxx_std_17)
 target_link_libraries(main-demo PRIVATE "CONAN_PKG::gflags" "CONAN_PKG::glog" "CONAN_PKG::eigen" "CONAN_PKG::yaml-cpp" "CONAN_PKG::ceres-solver" "CONAN_PKG::openimageio")
